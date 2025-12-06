@@ -2,6 +2,7 @@ import os
 from conan import ConanFile
 from conan.tools.cmake import cmake_layout, CMake
 from conan.tools.scm import Git
+from conan.tools.files import chdir
 
 class some_binary(ConanFile):
     name = "some_binary"
@@ -23,8 +24,10 @@ class some_binary(ConanFile):
         git.coordinates_to_conandata() 
 
     def source(self):
-        git = Git(self, "../..")
-        git.checkout_from_conandata_coordinates()
+        assert self.folders.root == "../.."
+        git = Git(self, self.folders.root)
+        with chdir(self, os.path.join(self.source_folder, self.folders.root)):
+            git.checkout_from_conandata_coordinates()
         
     def build(self):
         cmake = CMake(self)
