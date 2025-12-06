@@ -25,7 +25,7 @@ class some_binary(ConanFile):
     def source(self):
         assert self.folders.root == "../.."
         git = Git(self, self.folders.root)
-        sources = conan_data["scm"]
+        sources = self.conan_data["scm"]
         git.clone(url=sources["url"], target=self.folders.root, args=["--origin=origin"])
         git.run(f"fetch origin {sources['commit']}")
         git.checkout(commit=sources["commit"])
