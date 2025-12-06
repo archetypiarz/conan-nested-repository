@@ -2,7 +2,7 @@ import os
 from conan import ConanFile
 from conan.tools.cmake import cmake_layout, CMake
 from conan.tools.scm import Git
-from conan.tools.files import chdir
+from conan.tools.files import chdir, rmdir
 
 class some_binary(ConanFile):
     name = "some_binary"
@@ -25,8 +25,9 @@ class some_binary(ConanFile):
 
     def source(self):
         assert self.folders.root == "../.."
-        git = Git(self, self.folders.root)
         with chdir(self, os.path.join(self.source_folder, self.folders.root)):
+            rmdir(self, "src")
+            git = Git(self)
             git.checkout_from_conandata_coordinates()
         
     def build(self):
