@@ -2,6 +2,7 @@ import os
 from conan import ConanFile
 from conan.tools.cmake import cmake_layout, CMake
 from conan.tools.scm import Git
+from conan.tools.files import rmdir, chdir
 
 class some_binary(ConanFile):
     name = "some_binary"
@@ -25,6 +26,7 @@ class some_binary(ConanFile):
     def source(self):
         assert self.folders.root == "../.."
         git = Git(self, self.folders.root)
+        rmdir(self, "../src")
         sources = self.conan_data["scm"]
         git.clone(url=sources["url"], target=self.folders.root, args=["--origin=origin"])
         git.run(f"fetch origin {sources['commit']}")
