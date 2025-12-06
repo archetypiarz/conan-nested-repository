@@ -1,0 +1,1 @@
+. "/home/mnarowski/priv_repos/conan-nested-repository/src/some_binary/build/Debug/generators/conanrunenv-debug-x86_64.sh"
