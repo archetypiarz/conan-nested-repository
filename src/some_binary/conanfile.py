@@ -23,7 +23,7 @@ class some_binary(ConanFile):
         git.coordinates_to_conandata() 
 
     def source(self):
-        git = Git(self, "../..")
+        git = Git(self)
         git.checkout_from_conandata_coordinates()
         
     def build(self):
