@@ -23,8 +23,12 @@ class some_binary(ConanFile):
         git.coordinates_to_conandata() 
 
     def source(self):
-        git = Git(self, "../..")
-        git.checkout_from_conandata_coordinates()
+        assert self.folders.root == "../.."
+        git = Git(self, self.folders.root)
+        sources = conan_data["scm"]
+        git.clone(url=sources["url"], target=self.folders.root, args=["--origin=origin"])
+        git.run(f"fetch origin {sources['commit']}")
+        git.checkout(commit=sources["commit"])
         
     def build(self):
         cmake = CMake(self)
