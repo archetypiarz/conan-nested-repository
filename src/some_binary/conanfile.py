@@ -26,6 +26,6 @@ class some_binary(ConanFile):
         
     def build(self):
         cmake = CMake(self)
-        cmake.configure("src/some_binary")
+        cmake.configure()
         cmake.build()
         self.run(os.path.join(self.cpp.build.bindirs[0], "some_binary"))
