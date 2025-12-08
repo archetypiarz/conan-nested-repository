@@ -14,6 +14,7 @@ class some_binary(ConanFile):
         self.requires("fmt/12.1.0")
 
     def layout(self):
+        self.folders.root = "../.."
         cmake_layout(self)
 
     def export(self):
@@ -26,6 +27,6 @@ class some_binary(ConanFile):
         
     def build(self):
         cmake = CMake(self)
-        cmake.configure()
+        cmake.configure(build_script_folder="src/some_binary")
         cmake.build()
         self.run(os.path.join(self.cpp.build.bindirs[0], "some_binary"))
